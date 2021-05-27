@@ -1,6 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Mongoose } from 'mongoose';
 
 import { IBookDomain } from 'src/domain/book/book-domain.interface';
 import { IBookEntity } from './book.entity';
@@ -10,7 +10,7 @@ import { Book } from 'src/domain/book/book';
 export class BookRepository implements IBookDomain {
   constructor(@InjectModel('Book') private readonly book: Model<IBookEntity>) {}
 
-  public GetAll(): Promise<Book> {
+  public BookGetAll(): Promise<Book> {
     return new Promise<IBookEntity>((resolve, reject) => {
       this.book.find({}, (err: any, result: IBookEntity) => {
         if (err) {
@@ -22,7 +22,7 @@ export class BookRepository implements IBookDomain {
     });
   }
 
-  public GetAvailable(): Promise<Book> {
+  public BookGetAvailable(): Promise<Book> {
     return new Promise<IBookEntity>((resolve, reject) => {
       this.book.find(
         { borrowedStatus: false },
@@ -37,19 +37,23 @@ export class BookRepository implements IBookDomain {
     });
   }
 
-  public GetById(_id: string): Promise<Book> {
+  public BookGetById(_id: string): Promise<Book> {
     return new Promise<IBookEntity>((resolve, reject) => {
-      this.book.findById({ _id }, (err: any, result: IBookEntity) => {
-        if (err) {
-          reject(err);
-        }
+      try {
+        this.book.findById({ _id }, (err: any, result: IBookEntity) => {
+          if (err) {
+            reject(err);
+          }
 
-        resolve(result);
-      });
+          resolve(result);
+        });
+      } catch (err) {
+        reject(err);
+      }
     });
   }
 
-  public GetByCode(code: string): Promise<Book> {
+  public BookGetByCode(code: string): Promise<Book> {
     return new Promise<IBookEntity>((resolve, reject) => {
       this.book.findOne({ code }, (err: any, result: IBookEntity) => {
         if (err) {
@@ -61,7 +65,7 @@ export class BookRepository implements IBookDomain {
     });
   }
 
-  public Create(book: Partial<Book>): Promise<Book> {
+  public BookCreate(book: Partial<Book>): Promise<Book> {
     return new Promise<IBookEntity>((resolve, reject) => {
       const newBook = new this.book(book);
       newBook.save({}, (err: any, result: IBookEntity) => {
@@ -74,11 +78,11 @@ export class BookRepository implements IBookDomain {
     });
   }
 
-  public async CreateMany(books: Array<Book>) {
+  public async BookCreateMany(books: Array<Book>) {
     await this.book.insertMany(books);
   }
 
-  public UpdateById(
+  public BookUpdateById(
     bookId: string,
     updatedFields: Partial<Book>,
   ): Promise<Book> {
@@ -98,7 +102,7 @@ export class BookRepository implements IBookDomain {
     });
   }
 
-  public DeleteById(_id: string) {
+  public BookDeleteById(_id: string) {
     return new Promise<IBookEntity>((resolve, reject) => {
       this.book.findByIdAndDelete(
         { _id },

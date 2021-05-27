@@ -10,6 +10,8 @@ export const BookSchema = new Schema(
     author: { type: String, required: true },
     stock: { type: Number, required: true },
     borrowedStatus: { type: Boolean, required: true },
+    borrowedBy: { type: String, required: true },
+    borrowedDate: { type: String, required: true },
   },
   { collection: 'book' },
 );

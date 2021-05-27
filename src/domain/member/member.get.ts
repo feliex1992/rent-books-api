@@ -10,10 +10,10 @@ export class MemberGet {
   constructor(@MemberRepo() private readonly memberRepository: IMemberDomain) {}
 
   public async GetAll(): Promise<Member> {
-    return await this.memberRepository.GetAll();
+    return await this.memberRepository.MemberGetAll();
   }
 
   public async GetById(_id: string): Promise<Member> {
-    return await this.memberRepository.GetById(_id);
+    return await this.memberRepository.MemberGetById(_id);
   }
 }

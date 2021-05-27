@@ -11,10 +11,8 @@ export class MemberUpdate {
 
   public async UpdateById(
     _id: string,
-    members: Partial<Member>,
+    updatedFields: Partial<Member>,
   ): Promise<Member> {
-    const { name } = members;
-
-    return await this.memberRepository.UpdateById(_id, name);
+    return await this.memberRepository.MemberUpdateById(_id, updatedFields);
   }
 }

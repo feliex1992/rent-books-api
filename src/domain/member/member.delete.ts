@@ -10,6 +10,6 @@ export class MemberDelete {
   constructor(@MemberRepo() private readonly memberRepository: IMemberDomain) {}
 
   public async DeleteById(_id: string): Promise<Member> {
-    return await this.memberRepository.DeleteById(_id);
+    return await this.memberRepository.MemberDeleteById(_id);
   }
 }

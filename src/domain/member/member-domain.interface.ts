@@ -1,11 +1,14 @@
 import { Member } from './member';
 
 export interface IMemberDomain {
-  GetAll(): Promise<Member>;
-  GetById(_id: string): Promise<Member>;
-  GetByCode(code: string): Promise<Member>;
-  Create(createdData: Partial<Member>): Promise<Member>;
-  CreateMany(createdData: Array<Member>);
-  UpdateById(_id: string, name: string): Promise<Member>;
-  DeleteById(_id: string): Promise<Member>;
+  MemberGetAll(): Promise<Member>;
+  MemberGetById(_id: string): Promise<Member>;
+  MemberGetByCode(code: string): Promise<Member>;
+  MemberCreate(createdData: Partial<Member>): Promise<Member>;
+  MemberCreateMany(createdData: Array<Member>);
+  MemberUpdateById(
+    _id: string,
+    updatedFields: Partial<Member>,
+  ): Promise<Member>;
+  MemberDeleteById(_id: string): Promise<Member>;
 }

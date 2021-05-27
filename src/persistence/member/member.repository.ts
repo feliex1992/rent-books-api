@@ -12,7 +12,7 @@ export class MemberRepository implements IMemberDomain {
     @InjectModel('Member') private readonly member: Model<IMemberEntity>,
   ) {}
 
-  public async GetAll(): Promise<Member> {
+  public async MemberGetAll(): Promise<Member> {
     return new Promise<IMemberEntity>((resolve, reject) => {
       this.member.find({}, (err: any, result: IMemberEntity) => {
         if (err) {
@@ -24,19 +24,23 @@ export class MemberRepository implements IMemberDomain {
     });
   }
 
-  public async GetById(_id: string): Promise<Member> {
+  public async MemberGetById(_id: string): Promise<Member> {
     return new Promise<IMemberEntity>((resolve, reject) => {
-      this.member.findById({ _id }, (err: any, result: IMemberEntity) => {
-        if (err) {
-          reject(err);
-        }
+      try {
+        this.member.findById({ _id }, (err: any, result: IMemberEntity) => {
+          if (err) {
+            reject(err);
+          }
 
-        resolve(result);
-      });
+          resolve(result);
+        });
+      } catch (err) {
+        reject(err);
+      }
     });
   }
 
-  public async GetByCode(code: string): Promise<Member> {
+  public async MemberGetByCode(code: string): Promise<Member> {
     return new Promise<IMemberEntity>((resolve, reject) => {
       this.member.findOne({ code }, (err: any, result: IMemberEntity) => {
         if (err) {
@@ -48,7 +52,7 @@ export class MemberRepository implements IMemberDomain {
     });
   }
 
-  public async Create(createdData: Partial<Member>): Promise<Member> {
+  public async MemberCreate(createdData: Partial<Member>): Promise<Member> {
     return new Promise<IMemberEntity>((resolve, reject) => {
       const newMember = new this.member(createdData);
       newMember.save({}, (err: any, result: IMemberEntity) => {
@@ -61,15 +65,18 @@ export class MemberRepository implements IMemberDomain {
     });
   }
 
-  public async CreateMany(createdData: Array<Member>) {
+  public async MemberCreateMany(createdData: Array<Member>) {
     await this.member.insertMany(createdData);
   }
 
-  public async UpdateById(_id: string, name: string): Promise<Member> {
+  public async MemberUpdateById(
+    _id: string,
+    updatedFields: Partial<Member>,
+  ): Promise<Member> {
     return new Promise<IMemberEntity>((resolve, reject) => {
       this.member.findByIdAndUpdate(
         { _id },
-        { $set: { name } },
+        { $set: updatedFields },
         { new: true },
         (err: any, result: IMemberEntity) => {
           if (err) {
@@ -90,7 +97,7 @@ export class MemberRepository implements IMemberDomain {
     });
   }
 
-  public async DeleteById(_id: string): Promise<Member> {
+  public async MemberDeleteById(_id: string): Promise<Member> {
     return new Promise<IMemberEntity>((resolve, reject) => {
       this.member.findByIdAndDelete(
         { _id },

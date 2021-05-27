@@ -64,9 +64,9 @@ export class MemberController {
   @UsePipes(new ValidationPipe({ transform: true }))
   public async UpdateById(
     @Param('_id') _id: string,
-    @Body() members: UpdateDTO,
+    @Body() updatedFields: UpdateDTO,
   ): Promise<Member> {
-    return await this.memberUpdate.UpdateById(_id, members);
+    return await this.memberUpdate.UpdateById(_id, updatedFields);
   }
 
   @Delete('by-id/:_id')

@@ -8,6 +8,7 @@ export const MemberSchema = new Schema(
     code: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     suspendDate: { type: String, required: true },
+    borrowedBook: { type: Number, required: true },
   },
   { collection: 'member' },
 );

@@ -12,19 +12,20 @@ export class MemberCreate {
 
   public async Create(createdData: Partial<Member>): Promise<HttpStatus> {
     const { code } = createdData;
-    const member = await this.memberRepository.GetByCode(code);
+    const member = await this.memberRepository.MemberGetByCode(code);
     if (member) {
       throw new HttpException('Code member already use.', HttpStatus.CONFLICT);
     }
     const dataMember = {
       ...createdData,
       suspendDate: moment(new Date()).format('YYYY-MM-DD').toString(),
+      borrowedBook: 0,
     };
-    await this.memberRepository.Create(dataMember);
+    await this.memberRepository.MemberCreate(dataMember);
     throw new HttpException(createdData, HttpStatus.CREATED);
   }
 
   public async CreateMany(createdData: Array<Member>) {
-    await this.memberRepository.CreateMany(createdData);
+    await this.memberRepository.MemberCreateMany(createdData);
   }
 }

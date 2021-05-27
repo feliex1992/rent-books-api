@@ -10,14 +10,14 @@ export class BookGet {
   constructor(@BookRepo() private readonly bookRepository: IBookDomain) {}
 
   public async GetAll(): Promise<Book> {
-    return this.bookRepository.GetAll();
+    return this.bookRepository.BookGetAll();
   }
 
   public async GetAvailable(): Promise<Book> {
-    return this.bookRepository.GetAvailable();
+    return this.bookRepository.BookGetAvailable();
   }
 
   public async GetById(_id: string): Promise<Book> {
-    return this.bookRepository.GetById(_id);
+    return this.bookRepository.BookGetById(_id);
   }
 }

@@ -3,4 +3,5 @@ export type Member = {
   code: string;
   name: string;
   suspendDate: string;
+  borrowedBook: number;
 };

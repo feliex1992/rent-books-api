@@ -10,6 +10,6 @@ export class BookDelete {
   constructor(@BookRepo() private readonly bookRepository: IBookDomain) {}
 
   public async DeleteById(_id: string): Promise<Book> {
-    return await this.bookRepository.DeleteById(_id);
+    return await this.bookRepository.BookDeleteById(_id);
   }
 }

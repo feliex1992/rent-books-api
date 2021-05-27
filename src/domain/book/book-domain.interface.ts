@@ -1,12 +1,12 @@
 import { Book } from './book';
 
 export interface IBookDomain {
-  GetAll(): Promise<Book>;
-  GetAvailable(): Promise<Book>;
-  GetById(_id: string): Promise<Book>;
-  GetByCode(code: string): Promise<Book>;
-  Create(book: Partial<Book>): Promise<Book>;
-  CreateMany(books: Array<Book>);
-  UpdateById(_id: string, updatedFields: Partial<Book>): Promise<Book>;
-  DeleteById(_id: string): Promise<Book>;
+  BookGetAll(): Promise<Book>;
+  BookGetAvailable(): Promise<Book>;
+  BookGetById(_id: string): Promise<Book>;
+  BookGetByCode(code: string): Promise<Book>;
+  BookCreate(book: Partial<Book>): Promise<Book>;
+  BookCreateMany(books: Array<Book>);
+  BookUpdateById(_id: string, updatedFields: Partial<Book>): Promise<Book>;
+  BookDeleteById(_id: string): Promise<Book>;
 }

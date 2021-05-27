@@ -5,4 +5,6 @@ export type Book = {
   author: string;
   stock: number;
   borrowedStatus: boolean;
+  borrowedBy: string;
+  borrowedDate: string;
 };

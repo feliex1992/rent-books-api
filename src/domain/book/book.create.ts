@@ -12,7 +12,7 @@ export class BookCreate {
   public async Create(book: Partial<Book>): Promise<Book> {
     const { code } = book;
 
-    const cekCodeBook = await this.bookRepository.GetByCode(code);
+    const cekCodeBook = await this.bookRepository.BookGetByCode(code);
     if (cekCodeBook) {
       throw new HttpException('Code book already use.', HttpStatus.CONFLICT);
     }
@@ -21,11 +21,12 @@ export class BookCreate {
       ...book,
       stock: 1,
       borrowedStatus: false,
+      borrowedBy: '-',
     };
-    return await this.bookRepository.Create(newBook);
+    return await this.bookRepository.BookCreate(newBook);
   }
 
   public async CreateMany(books: Array<Book>) {
-    await this.bookRepository.CreateMany(books);
+    await this.bookRepository.BookCreateMany(books);
   }
 }

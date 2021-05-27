@@ -13,6 +13,6 @@ export class BookUpdate {
     _id: string,
     updatedFields: Partial<Book>,
   ): Promise<Book> {
-    return await this.bookRepository.UpdateById(_id, updatedFields);
+    return await this.bookRepository.BookUpdateById(_id, updatedFields);
   }
 }
