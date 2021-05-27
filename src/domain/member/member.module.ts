@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 
-import { Get } from './member.get';
-import { Create } from './member.create';
-import { Update } from './member.update';
-import { Delete } from './member.delete';
+import { MemberGet } from './member.get';
+import { MemberCreate } from './member.create';
+import { MemberUpdate } from './member.update';
+import { MemberDelete } from './member.delete';
 import { MemberRepoModule } from '../../persistence/member/member.repo.module';
 
 @Module({
   imports: [MemberRepoModule],
-  providers: [Get, Create, Update, Delete],
-  exports: [Get, Create, Update, Delete],
+  providers: [MemberGet, MemberCreate, MemberUpdate, MemberDelete],
+  exports: [MemberGet, MemberCreate, MemberUpdate, MemberDelete],
 })
 export class MemberModule {}

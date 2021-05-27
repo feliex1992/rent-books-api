@@ -24,6 +24,18 @@ export class MemberRepository implements IMemberDomain {
     });
   }
 
+  public async GetById(_id: string): Promise<Member> {
+    return new Promise<IMemberEntity>((resolve, reject) => {
+      this.member.findById({ _id }, (err: any, result: IMemberEntity) => {
+        if (err) {
+          reject(err);
+        }
+
+        resolve(result);
+      });
+    });
+  }
+
   public async GetByCode(code: string): Promise<Member> {
     return new Promise<IMemberEntity>((resolve, reject) => {
       this.member.findOne({ code }, (err: any, result: IMemberEntity) => {
@@ -53,10 +65,10 @@ export class MemberRepository implements IMemberDomain {
     await this.member.insertMany(createdData);
   }
 
-  public async UpdateByCode(code: string, name: string): Promise<Member> {
+  public async UpdateById(_id: string, name: string): Promise<Member> {
     return new Promise<IMemberEntity>((resolve, reject) => {
-      this.member.findOneAndUpdate(
-        { code },
+      this.member.findByIdAndUpdate(
+        { _id },
         { $set: { name } },
         { new: true },
         (err: any, result: IMemberEntity) => {
@@ -67,7 +79,7 @@ export class MemberRepository implements IMemberDomain {
           if (!result) {
             reject(
               new HttpException(
-                `Code member: ${code} can't found!`,
+                `Member with id: ${_id} can't found!`,
                 HttpStatus.NOT_FOUND,
               ),
             );
@@ -78,10 +90,10 @@ export class MemberRepository implements IMemberDomain {
     });
   }
 
-  public async DeleteByCode(code: string): Promise<Member> {
+  public async DeleteById(_id: string): Promise<Member> {
     return new Promise<IMemberEntity>((resolve, reject) => {
-      this.member.findOneAndDelete(
-        { code },
+      this.member.findByIdAndDelete(
+        { _id },
         {},
         (err: any, result: IMemberEntity) => {
           if (err) {
@@ -91,7 +103,7 @@ export class MemberRepository implements IMemberDomain {
           if (!result) {
             reject(
               new HttpException(
-                `Code member: ${code} can't found!`,
+                `Member with id: ${_id} can't found!`,
                 HttpStatus.NOT_FOUND,
               ),
             );

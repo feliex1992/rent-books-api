@@ -6,10 +6,10 @@ import { IMemberDomain } from './member-domain.interface';
 const MemberRepo = () => Inject('MemberRepo');
 
 @Injectable()
-export class Delete {
+export class MemberDelete {
   constructor(@MemberRepo() private readonly memberRepository: IMemberDomain) {}
 
-  public async DeleteByCode(code: string): Promise<Member> {
-    return await this.memberRepository.DeleteByCode(code);
+  public async DeleteById(_id: string): Promise<Member> {
+    return await this.memberRepository.DeleteById(_id);
   }
 }

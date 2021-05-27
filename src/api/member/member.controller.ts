@@ -13,11 +13,11 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { MEMBERS } from '../../statics';
-import { Get as GetMember } from '../../domain/member/member.get';
-import { Create as CreateMember } from '../../domain/member/member.create';
-import { Update as UpdateMember } from '../../domain/member/member.update';
-import { Delete as DeleteMember } from '../../domain/member/member.delete';
+import { MEMBERS } from 'src/statics';
+import { MemberGet } from 'src/domain/member/member.get';
+import { MemberCreate } from 'src/domain/member/member.create';
+import { MemberUpdate } from 'src/domain/member/member.update';
+import { MemberDelete } from 'src/domain/member/member.delete';
 import { CreateDTO } from './dto/create.dto';
 import { UpdateDTO } from './dto/update.dto';
 import { Member } from 'src/domain/member/member';
@@ -28,49 +28,49 @@ export class MemberController {
   private logger = new Logger('Member Controller');
 
   constructor(
-    private readonly getMember: GetMember,
-    private readonly createMember: CreateMember,
-    private readonly updateMember: UpdateMember,
-    private readonly deleteMember: DeleteMember,
+    private readonly memberGet: MemberGet,
+    private readonly memberCreate: MemberCreate,
+    private readonly memberUpdate: MemberUpdate,
+    private readonly memberDelete: MemberDelete,
   ) {
     this.patchData();
   }
 
   async patchData() {
-    const member = await this.getMember.GetAll();
+    const member = await this.memberGet.GetAll();
     if (!member[0]) {
       this.logger.log('Start Create Many Member.');
-      await this.createMember.CreateMany(MEMBERS);
+      await this.memberCreate.CreateMany(MEMBERS);
     }
   }
 
   @Get('all')
   public async Get(): Promise<any> {
-    return await this.getMember.GetAll();
+    return await this.memberGet.GetAll();
   }
 
-  @Get('by-code/:code')
-  public async GetByCode(@Param('code') code: string): Promise<any> {
-    return await this.getMember.GetByCode(code);
+  @Get('by-id/:_id')
+  public async GetById(@Param('_id') _id: string): Promise<any> {
+    return await this.memberGet.GetById(_id);
   }
 
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
   public async Create(@Body() member: CreateDTO): Promise<HttpStatus> {
-    return await this.createMember.Create(member);
+    return await this.memberCreate.Create(member);
   }
 
-  @Put('by-code/:code')
+  @Put('by-id/:_id')
   @UsePipes(new ValidationPipe({ transform: true }))
-  public async UpdateByCode(
-    @Param('code') code: string,
+  public async UpdateById(
+    @Param('_id') _id: string,
     @Body() members: UpdateDTO,
   ): Promise<Member> {
-    return await this.updateMember.UpdateByCode(code, members);
+    return await this.memberUpdate.UpdateById(_id, members);
   }
 
-  @Delete('by-code/:code')
-  public async DeleteByCode(@Param('code') code: string): Promise<Member> {
-    return await this.deleteMember.DeleteByCode(code);
+  @Delete('by-id/:_id')
+  public async DeleteById(@Param('_id') _id: string): Promise<Member> {
+    return await this.memberDelete.DeleteById(_id);
   }
 }

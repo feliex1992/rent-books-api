@@ -6,14 +6,14 @@ import { IMemberDomain } from './member-domain.interface';
 const MemberRepo = () => Inject('MemberRepo');
 
 @Injectable()
-export class Get {
+export class MemberGet {
   constructor(@MemberRepo() private readonly memberRepository: IMemberDomain) {}
 
   public async GetAll(): Promise<Member> {
     return await this.memberRepository.GetAll();
   }
 
-  public async GetByCode(code: string): Promise<Member> {
-    return await this.memberRepository.GetByCode(code);
+  public async GetById(_id: string): Promise<Member> {
+    return await this.memberRepository.GetById(_id);
   }
 }

@@ -7,7 +7,7 @@ import { IMemberDomain } from './member-domain.interface';
 const MemberRepo = () => Inject('MemberRepo');
 
 @Injectable()
-export class Create {
+export class MemberCreate {
   constructor(@MemberRepo() private readonly memberRepository: IMemberDomain) {}
 
   public async Create(createdData: Partial<Member>): Promise<HttpStatus> {

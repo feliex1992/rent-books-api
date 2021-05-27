@@ -6,15 +6,15 @@ import { IMemberDomain } from './member-domain.interface';
 const MemberRepo = () => Inject('MemberRepo');
 
 @Injectable()
-export class Update {
+export class MemberUpdate {
   constructor(@MemberRepo() private readonly memberRepository: IMemberDomain) {}
 
-  public async UpdateByCode(
-    code: string,
+  public async UpdateById(
+    _id: string,
     members: Partial<Member>,
   ): Promise<Member> {
     const { name } = members;
 
-    return await this.memberRepository.UpdateByCode(code, name);
+    return await this.memberRepository.UpdateById(_id, name);
   }
 }
