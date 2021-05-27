@@ -30,6 +30,8 @@
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "dotenv": "^10.0.0",
+    "interface": "^1.2.1",
+    "moment": "^2.29.1",
     "mongoose": "^5.12.11",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",

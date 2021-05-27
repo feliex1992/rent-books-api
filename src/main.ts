@@ -17,6 +17,7 @@ async function bootstrap() {
     .setTitle('Rent Books')
     .setDescription('Rent Books System')
     .setVersion('1.0.0')
+    .addTag('member')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
