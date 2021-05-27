@@ -2,7 +2,6 @@ import {
   Controller,
   Logger,
   Get,
-  HttpStatus,
   Param,
   Body,
   Post,
@@ -36,8 +35,8 @@ export class BookController {
   }
 
   async patchData() {
-    const member = await this.bookGet.GetAll();
-    if (!member[0]) {
+    const book = await this.bookGet.GetAll();
+    if (!book[0]) {
       this.logger.log('Start Create Many Books.');
       await this.bookCreate.CreateMany(BOOKS);
     }

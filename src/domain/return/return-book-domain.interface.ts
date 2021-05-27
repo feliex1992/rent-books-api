@@ -1,7 +1,7 @@
 import { Member } from '../member/member';
 import { Book } from '../book/book';
 
-export interface IBorrowDomain {
+export interface IReturnBookDomain {
   // Member
   MemberGetById(_id: string): Promise<Member>;
   MemberUpdateById(

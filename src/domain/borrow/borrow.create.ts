@@ -1,8 +1,6 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import * as moment from 'moment';
 
-import { Member } from '../member/member';
-import { Book } from '../book/book';
 import { Borrow } from './borrow';
 import { IBorrowDomain } from './borrow-domain.interface';
 
@@ -16,7 +14,7 @@ export class BorrowCreate {
     @BookRepo() private readonly bookRepository: IBorrowDomain,
   ) {}
 
-  public async Create(borrow: Partial<Borrow>): Promise<any> {
+  public async Create(borrow: Partial<Borrow>): Promise<HttpStatus> {
     const { idMember, idBook } = borrow;
 
     const cekMember = await this.memberRepository.MemberGetById(idMember);
