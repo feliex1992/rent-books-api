@@ -18,8 +18,8 @@ import { MemberGet } from 'src/domain/member/member.get';
 import { MemberCreate } from 'src/domain/member/member.create';
 import { MemberUpdate } from 'src/domain/member/member.update';
 import { MemberDelete } from 'src/domain/member/member.delete';
-import { CreateDTO } from './dto/create.dto';
-import { UpdateDTO } from './dto/update.dto';
+import { MemberCreateDTO } from './dto/member-create.dto';
+import { MemberUpdateDTO } from './dto/member-update.dto';
 import { Member } from 'src/domain/member/member';
 
 @ApiTags('member')
@@ -56,7 +56,7 @@ export class MemberController {
 
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
-  public async Create(@Body() member: CreateDTO): Promise<HttpStatus> {
+  public async Create(@Body() member: MemberCreateDTO): Promise<HttpStatus> {
     return await this.memberCreate.Create(member);
   }
 
@@ -64,7 +64,7 @@ export class MemberController {
   @UsePipes(new ValidationPipe({ transform: true }))
   public async UpdateById(
     @Param('_id') _id: string,
-    @Body() updatedFields: UpdateDTO,
+    @Body() updatedFields: MemberUpdateDTO,
   ): Promise<Member> {
     return await this.memberUpdate.UpdateById(_id, updatedFields);
   }

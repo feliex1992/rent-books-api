@@ -9,7 +9,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 
 import { ReturnCreate } from 'src/domain/return/return-book.create';
-import { CreateDTO } from './dto/create.dto';
+import { ReturnCreateDTO } from './dto/return-create.dto';
 
 @ApiTags('return')
 @Controller('return')
@@ -18,7 +18,9 @@ export class ReturnController {
 
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
-  public async Create(@Body() returnBook: CreateDTO): Promise<HttpStatus> {
+  public async Create(
+    @Body() returnBook: ReturnCreateDTO,
+  ): Promise<HttpStatus> {
     return await this.returnCreate.Create(returnBook);
   }
 }

@@ -9,7 +9,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 
 import { BorrowCreate } from 'src/domain/borrow/borrow.create';
-import { CreateDTO } from './dto/create.dto';
+import { BorrowCreateDTO } from './dto/borrow-create.dto';
 
 @ApiTags('borrow')
 @Controller('borrow')
@@ -18,7 +18,7 @@ export class BorrowController {
 
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
-  public async Create(@Body() borrow: CreateDTO): Promise<HttpStatus> {
+  public async Create(@Body() borrow: BorrowCreateDTO): Promise<HttpStatus> {
     return await this.borrowCreate.Create(borrow);
   }
 }

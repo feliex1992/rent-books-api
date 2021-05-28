@@ -18,7 +18,8 @@ import { BookCreate } from 'src/domain/book/book.create';
 import { BookUpdate } from 'src/domain/book/book.update';
 import { BookDelete } from 'src/domain/book/book.delete';
 import { Book } from 'src/domain/book/book';
-import { CreateDTO } from './dto/create.dto';
+import { BookCreateDTO } from './dto/book-create.dto';
+import { BookUpdateDTO } from './dto/book-update.dto';
 
 @ApiTags('book')
 @Controller('book')
@@ -59,7 +60,7 @@ export class BookController {
 
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
-  public async Create(@Body() book: CreateDTO): Promise<Book> {
+  public async Create(@Body() book: BookCreateDTO): Promise<Book> {
     return await this.bookCreate.Create(book);
   }
 
@@ -67,7 +68,7 @@ export class BookController {
   @UsePipes(new ValidationPipe({ transform: true }))
   public async Update(
     @Param('_id') _id: string,
-    @Body() book: CreateDTO,
+    @Body() book: BookUpdateDTO,
   ): Promise<Book> {
     return await this.bookUpdate.UpdateById(_id, book);
   }
