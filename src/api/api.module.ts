@@ -5,6 +5,7 @@ import { MemberController } from './member/member.controller';
 import { BookController } from './book/book.controller';
 import { BorrowController } from './borrow/borrow.controller';
 import { ReturnController } from './return/return.controller';
+import { UserController } from './user/user.controller';
 
 @Module({
   controllers: [
@@ -12,6 +13,7 @@ import { ReturnController } from './return/return.controller';
     BookController,
     BorrowController,
     ReturnController,
+    UserController,
   ],
   imports: [DomainModule],
 })
