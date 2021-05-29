@@ -1,30 +1,31 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 
-import { DatabaseModule } from './database/database.module';
-import { DatabaseService } from './database/database.service';
+import { EnvModule } from './config/env.module';
+import { EnvService } from './config/env.service';
 import { ApiModule } from './api/api.module';
 import { DomainModule } from './domain/domain.module';
 import { PersistenceModule } from './persistence/persistence.module';
 
+@Global()
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
     MongooseModule.forRootAsync({
-      imports: [DatabaseModule],
-      useFactory: (database: DatabaseService) => {
+      imports: [EnvModule],
+      useFactory: (envService: EnvService) => {
         return <MongooseModuleOptions>{
-          uri: database.get(),
+          uri: envService.getDbConnectionString(),
           useNewUrlParser: true,
           useUnifiedTopology: true,
           useFindAndModify: false,
           useCreateIndex: true,
         };
       },
-      inject: [DatabaseService],
+      inject: [EnvService],
     }),
     ApiModule,
     DomainModule,
