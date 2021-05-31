@@ -1,6 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Mongoose } from 'mongoose';
+import { ClientSession, Model } from 'mongoose';
 
 import { IBookDomain } from 'src/domain/book/book-domain.interface';
 import { IBookEntity } from './book.entity';
@@ -65,10 +65,13 @@ export class BookRepository implements IBookDomain {
     });
   }
 
-  public BookCreate(book: Partial<Book>): Promise<Book> {
+  public BookCreate(
+    book: Partial<Book>,
+    session: ClientSession,
+  ): Promise<Book> {
     return new Promise<IBookEntity>((resolve, reject) => {
       const newBook = new this.book(book);
-      newBook.save({}, (err: any, result: IBookEntity) => {
+      newBook.save({ session }, (err: any, result: IBookEntity) => {
         if (err) {
           reject(err);
         }
@@ -85,12 +88,13 @@ export class BookRepository implements IBookDomain {
   public BookUpdateById(
     bookId: string,
     updatedFields: Partial<Book>,
+    session: ClientSession,
   ): Promise<Book> {
     return new Promise<IBookEntity>((resolve, reject) => {
       this.book.findByIdAndUpdate(
         bookId,
         { $set: updatedFields },
-        { new: true },
+        { new: true, session },
         (err: any, result: IBookEntity) => {
           if (err) {
             reject(err);

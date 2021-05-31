@@ -33,7 +33,7 @@ export class MemberController {
     private readonly memberUpdate: MemberUpdate,
     private readonly memberDelete: MemberDelete,
   ) {
-    this.patchData();
+    // this.patchData();
   }
 
   async patchData() {

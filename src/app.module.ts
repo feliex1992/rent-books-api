@@ -8,6 +8,9 @@ import { ApiModule } from './api/api.module';
 import { DomainModule } from './domain/domain.module';
 import { PersistenceModule } from './persistence/persistence.module';
 
+import { HelpersModule } from './helpers/helpers.module';
+import { InitModule } from './helpers/init.module';
+
 @Global()
 @Module({
   imports: [
@@ -30,6 +33,8 @@ import { PersistenceModule } from './persistence/persistence.module';
     ApiModule,
     DomainModule,
     PersistenceModule,
+    InitModule,
+    HelpersModule,
   ],
 })
 export class AppModule {}

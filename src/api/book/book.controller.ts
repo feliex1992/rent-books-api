@@ -34,7 +34,7 @@ export class BookController {
     private readonly bookUpdate: BookUpdate,
     private readonly bookDelete: BookDelete,
   ) {
-    this.patchData();
+    // this.patchData();
   }
 
   async patchData() {
