@@ -33,6 +33,7 @@ export class BookCreate {
         borrowedDate: '-',
       };
       const result = await this.bookRepository.BookCreate(newBook, session);
+
       await this.helpers.transaction.commitTransaction(session);
       return result;
     } catch (err) {
