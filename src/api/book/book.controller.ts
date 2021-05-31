@@ -9,9 +9,11 @@ import {
   ValidationPipe,
   Put,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiHeader } from '@nestjs/swagger';
 
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { BOOKS } from 'src/statics';
 import { BookGet } from 'src/domain/book/book.get';
 import { BookCreate } from 'src/domain/book/book.create';
@@ -43,6 +45,8 @@ export class BookController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
+  @ApiHeader({ name: 'x-auth-token' })
   @Get('all')
   public async Get(): Promise<Book> {
     return await this.bookGet.GetAll();
